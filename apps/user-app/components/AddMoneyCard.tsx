@@ -80,8 +80,6 @@ export const AddMoney = () => {
           <Button
             onClick={ async() => {
               handleTransaction();
-              // await createOnRampTransactions(amount * 100,provider);
-              // window.location.href = redirectUrl || "";
             }}
           >
             Add Money

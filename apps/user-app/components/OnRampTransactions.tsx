@@ -9,6 +9,7 @@ export const OnRampTransactions = ({
     // TODO: Can the type of `status` be more specific?
     status: string;
     provider: string;
+    type: "Deposit" | "Withdrawal";
   }[];
 }) => {
   if (!transactions.length) {
@@ -24,13 +25,22 @@ export const OnRampTransactions = ({
         {transactions.map((t) => (
           <div className="flex justify-between">
             <div>
-              <div className="text-sm">Received INR</div>
+              <div className="text-sm"> {t.type}</div>
               <div className="text-slate-600 text-xs">
                 {t.time.toDateString()}
               </div>
             </div>
             <div className="flex flex-col justify-center">
-              + Rs {t.amount / 100}
+              <span
+                className={
+                  t.type == "Deposit"
+                    ? "text-green-600"
+                    : "text-red-600"
+                }
+              >
+                {" "}
+                ₹ {t.amount / 100}
+              </span>
             </div>
           </div>
         ))}
