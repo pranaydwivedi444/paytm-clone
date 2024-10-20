@@ -18,47 +18,49 @@ const SUPPORTED_BANKS = [
   },
 ];
 
-export const AddMoney = () => {
+export default function () {
   const [redirectUrl, setRedirectUrl] = useState(
     SUPPORTED_BANKS[0]?.redirectUrl
   );
   const [amount, setAmount] = useState(0);
-  const [provider,setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
+  const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
 
-  async function handleTransaction(){
+  async function handleTransaction() {
     try {
-      const result = await createOnRampTransactions(amount * 100, provider, 'Deposit');
+      const result = await createOnRampTransactions(amount * 100, provider , 'Withdrawal');
       console.log(result);
 
       //post webhook
-      const response = await fetch("http://localhost:3003/hdfcWebhook", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: result.token,
-          userId: result.userId,
-          amount: amount * 100,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3003/hdfcWithdrawlWebhook",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: result.token,
+            userId: result.userId,
+            amount: amount * 100,
+          }),
+        }
+      );
       const data = await response.json();
       console.log("Webhook response:", data);
-      window.location.href = redirectUrl || "";
-      // window.location.reload();
+
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
-    
   }
   return (
-    <Card title="Add Money">
+    <Card title="Withdraw Money">
       <div className="w-full">
         <TextInput
           label={"Amount"}
           placeholder={"Amount"}
           onChange={(value) => {
-            setAmount(Number(value))
+            setAmount(Number(value));
           }}
         />
         <div className="py-4 text-left">Bank</div>
@@ -78,13 +80,13 @@ export const AddMoney = () => {
         />
         <div className="flex justify-center pt-4">
           <Button
-            onClick={ async() => {
+            onClick={async () => {
               handleTransaction();
               // await createOnRampTransactions(amount * 100,provider);
               // window.location.href = redirectUrl || "";
             }}
           >
-            Add Money
+            Withdraw Money
           </Button>
         </div>
       </div>

@@ -5,7 +5,8 @@ import prisma from "@repo/db/client";
 
 export async function createOnRampTransactions(
   amount: number,
-  provider: string
+  provider: string,
+  type: "Deposit" | "Withdrawal"
 ) {
   const session = await getServerSession(authOptions);
 
@@ -23,6 +24,7 @@ export async function createOnRampTransactions(
         status: "Processing",
         token: Math.random().toString(36).substr(2),
         startTime: new Date(),
+        type: type,
       },
     });
 

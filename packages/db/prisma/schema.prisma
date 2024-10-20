@@ -15,6 +15,8 @@ model User {
   password          String
   OnRampTransaction OnRampTransaction[]
   Balance           Balance[]
+  sentTransfers     P2PTransfer[]       @relation(name: "FromUserRelation")
+  receivedTransfers P2PTransfer[]       @relation(name: "ToUserRelation")
 }
 
 model Merchant {
@@ -33,6 +35,7 @@ model OnRampTransaction {
   startTime DateTime
   userId    Int
   user      User         @relation(fields: [userId], references: [id])
+  type      TransactionType @default(Withdrawal)
 }
 
 model Balance {
@@ -41,6 +44,16 @@ model Balance {
   amount Int
   locked Int
   user   User @relation(fields: [userId], references: [id])
+}
+
+model P2PTransfer {
+  id         Int      @id @default(autoincrement())
+  amount     Int
+  timestamp  DateTime @default(now())
+  fromUserId Int
+  toUserId   Int
+  fromUser   User     @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])
+  toUser     User     @relation(name: "ToUserRelation", fields: [toUserId], references: [id])
 }
 
 enum AuthType {
@@ -52,4 +65,9 @@ enum OnRampStatus {
   Success
   Failure
   Processing
+}
+
+enum TransactionType {
+  Deposit
+  Withdrawal
 }
