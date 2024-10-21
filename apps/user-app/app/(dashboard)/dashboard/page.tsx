@@ -7,10 +7,13 @@ import CardStatement from "../../../components/CardStatement";
 import Link from "next/link";
 import { Button } from "@repo/ui/button";
 import { NavigationButtons } from "../../../components/AllButtons";
+import { redirect } from "next/navigation";
 
 async function getUserDetails() {
   const session = await getServerSession(authOptions);
+  if(session?.user)
   return session?.user;
+  else  redirect("/api/auth/signin");
 }
 
 export default async function HomePage() {
