@@ -54,7 +54,7 @@ export async function getP2PTransactions() {
       amount: transaction.amount,
       time: transaction.timestamp,
       phoneNumber: transaction.toUser.number,
-      name: transaction.toUser.name || "",
+      name: type == 'Debit' ? transaction.toUser.name : transaction.fromUser.name ,
       type,
     };
   });
