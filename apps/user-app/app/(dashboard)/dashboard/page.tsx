@@ -3,6 +3,10 @@ import { authOptions } from "../../lib/auth";
 import { getBalance, getStatement } from "../../lib/balanceHelper";
 import { BalanceCard } from "../../../components/BalanceCard";
 import { Statement } from "../../../components/Statement";
+import CardStatement from "../../../components/CardStatement";
+import Link from "next/link";
+import { Button } from "@repo/ui/button";
+import { NavigationButtons } from "../../../components/AllButtons";
 
 async function getUserDetails() {
   const session = await getServerSession(authOptions);
@@ -59,22 +63,11 @@ export default async function HomePage() {
           </div>
 
           {/* Statement Card */}
-          <div className="bg-white shadow rounded-lg p-6">
-            <Statement
-              transactions={
-               statement.slice(0, 5)
-              }
-            />
-            <div className="mt-4">
-              <button
-               
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all"
-              >
-                { "Show All Transactions"}
-              </button>
-            </div>
-          </div>
+          <CardStatement statement={statement.slice(0, 5)} showButton={true} />
         </div>
+       <div className="m-3 flex flex-row flex-wrap justify-center">
+          <NavigationButtons/>
+       </div>
       </main>
     </div>
   );

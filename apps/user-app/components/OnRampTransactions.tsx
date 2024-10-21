@@ -25,7 +25,7 @@ export const OnRampTransactions = ({
         {transactions.map((t) => (
           <div className="flex justify-between">
             <div>
-              <div className="text-sm"> {t.type}</div>
+              <div className="text-sm"> {t.type} ({t.provider}) </div>
               <div className="text-slate-600 text-xs">
                 {t.time.toDateString()}
               </div>
