@@ -12,5 +12,9 @@
     },
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
+    },
+    "scripts": {
+        "db-generate": "prisma generate",
+        "db-push": "prisma db push --skip-generate"
     }
 }

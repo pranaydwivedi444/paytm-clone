@@ -1,14 +1,15 @@
 {
-  "name": "week-18",
+  "name": "paytm",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "npm run db-generate && turbo build", 
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db-generate":"cd packages/db && npx prisma generate && cd ../..",
+    "db-generate": "cd packages/db && npx prisma generate && cd ../..", 
+    "prebuild": "npm run db-generate", 
     "start-user-app": "cd ./apps/user-app && npm run start",
-    "start-express" : "cd ./apps/bank-webhook && npm run start"
+    "start-express": "cd ./apps/bank-webhook && npm run start"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

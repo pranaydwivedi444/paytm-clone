@@ -33,7 +33,7 @@ jobs:
         push: true
         tags: pranaydwivedi32/paytm-bankwebhook
 
-    - name: Verify Pushed Image
-      run: |
-       docker pull pranaydwivedi32/paytm-clone-project:latest 
-       docker pull pranaydwivedi32/paytm-bankwebhook:latest
+    # - name: Verify Pushed Image
+    #   run: |
+    #    docker pull pranaydwivedi32/paytm-clone-project:latest 
+    #    docker pull pranaydwivedi32/paytm-bankwebhook:latest
